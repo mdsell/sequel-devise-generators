@@ -1,0 +1,22 @@
+Sequel.migration do
+  change do
+    create_table(:<%= table_name %>) do
+      primary_key :id
+      <%= migration_data %>
+
+      <% attributes.each do |attribute| %>
+        <%= attribute.type %> :<%= attribute.name %>
+      <% end %>
+
+      DateTime :created_at
+      DateTime :updated_at
+    end
+
+    alter_table(:<%= table_name %>) do
+      add_index :<%= table_name %>, :email,                :unique => true
+      add_index :<%= table_name %>, :reset_password_token, :unique => true
+      # add_index :<%= table_name %>, :confirmation_token,   :unique => true
+      # add_index :<%= table_name %>, :unlock_token,         :unique => true
+    end
+  end
+end

@@ -25,9 +25,9 @@ if DEVISE_ORM == :sequel
       assert_file "app/models/monster.rb", /plugin :devise/
     end
 
-    test "model uses devise :database_authenticatable" do
+    test "model uses timestamps plugin" do
       run_generator %w(monster)
-      assert_file "app/models/monster.rb", /devise :database_authenticatable/
+      assert_file "app/models/monster.rb", /plugin :timestamps/
     end
 
     test "all files are properly deleted" do

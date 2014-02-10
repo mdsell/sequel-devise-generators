@@ -32,12 +32,15 @@ module Sequel
       end
 
       def inject_devise_content
-        content = ("#{devise_plugin}#{model_contents}").split("\n").map { |line| "  " * indent_depth + line } .join("\n") << "\n"
+        content = ("#{sequel_plugins}#{model_contents}").split("\n").map { |line| "  " * indent_depth + line } .join("\n") << "\n"
         inject_into_class(model_path, class_parts.last, content) if model_exists?
       end
 
-      def devise_plugin
-        "  plugin :devise\n"
+      def sequel_plugins
+        [
+          ':devise', 
+          ':timestamps, :update_on_create => true'
+        ].map { |p| "  plugin #{p}\n" }.join('')
       end
 
       def class_parts
